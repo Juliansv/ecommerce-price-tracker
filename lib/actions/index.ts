@@ -8,6 +8,14 @@ export async function scrapeAndStoreProduct(productURL: string) {
     }
     try {
         const scrapedProduct = await scrapeMeliProduct(productURL)
+        
+        if (!scrapedProduct) return;
+        
+        // store product in database
+        
+        
+        // return product
+        return scrapedProduct
     } catch (error) {
         let message
         if (error instanceof Error) message = error.message

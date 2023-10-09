@@ -24,7 +24,16 @@ export async function scrapeMeliProduct (url: string) {
         // Fetch the product page
         const response = await axios.get(url, options)
 
-        console.log(response.data);
+        const $ = cheerio.load(response.data)
+
+        // Get the product title
+        const title = $('h1').text().trim()
+        const price = $('.ui-pdp-price__main-container .ui-pdp-price__second-line .andes-money-amount__fraction').text().trim()
+        const availability = $('#available_quantity').text().trim().includes("disponible" || "disponibles")
+        const image = $('.ui-pdp-gallery__figure img').first()[0].attribs.src
+
+
+        return {title, price, availability, image}
         
     } catch (error) {
         let message
