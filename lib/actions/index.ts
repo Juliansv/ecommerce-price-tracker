@@ -1,5 +1,6 @@
 "use server"
 
+import { connectToDB } from "../mongoose"
 import { scrapeMeliProduct } from "../scraper"
 
 export async function scrapeAndStoreProduct(productURL: string) {
@@ -7,12 +8,15 @@ export async function scrapeAndStoreProduct(productURL: string) {
         return
     }
     try {
+        // connect to db
+        connectToDB()
+
         const scrapedProduct = await scrapeMeliProduct(productURL)
         
         if (!scrapedProduct) return;
         
         // store product in database
-        
+
         
         // return product
         return scrapedProduct
